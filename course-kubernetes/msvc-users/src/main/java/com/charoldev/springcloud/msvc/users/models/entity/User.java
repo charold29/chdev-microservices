@@ -1,4 +1,4 @@
-package com.charoldev.springcloud.msvc.users.model.entity;
+package com.charoldev.springcloud.msvc.users.models.entity;
 
 import lombok.Getter;
 import lombok.Setter;

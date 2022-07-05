@@ -1,6 +1,6 @@
-package com.charoldev.springcloud.msvc.users.service;
+package com.charoldev.springcloud.msvc.users.services;
 
-import com.charoldev.springcloud.msvc.users.model.entity.User;
+import com.charoldev.springcloud.msvc.users.models.entity.User;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,7 +1,7 @@
-package com.charoldev.springcloud.msvc.users.service;
+package com.charoldev.springcloud.msvc.users.services;
 
-import com.charoldev.springcloud.msvc.users.model.entity.User;
-import com.charoldev.springcloud.msvc.users.repository.UserRepository;
+import com.charoldev.springcloud.msvc.users.models.entity.User;
+import com.charoldev.springcloud.msvc.users.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
