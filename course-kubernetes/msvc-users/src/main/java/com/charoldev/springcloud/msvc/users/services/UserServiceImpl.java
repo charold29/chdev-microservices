@@ -2,17 +2,17 @@ package com.charoldev.springcloud.msvc.users.services;
 
 import com.charoldev.springcloud.msvc.users.models.entity.User;
 import com.charoldev.springcloud.msvc.users.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService{
 
-    @Autowired
+    @Resource
     private UserRepository userRepository;
 
     @Override

@@ -2,11 +2,11 @@ package com.charoldev.springcloud.msvc.users.controllers;
 
 import com.charoldev.springcloud.msvc.users.models.entity.User;
 import com.charoldev.springcloud.msvc.users.services.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +14,7 @@ import java.util.Optional;
 @RequestMapping("/api/users")
 public class UserController {
 
-    @Autowired
+    @Resource
     private UserService userService;
 
     @GetMapping
@@ -25,9 +25,10 @@ public class UserController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable(name = "userId") Long id) {
-        Optional<User> userOptional = userService.findById(id);
-        if (userOptional.isPresent()) {
-            return ResponseEntity.ok(userOptional.get());
+        Optional<User> optional = userService.findById(id);
+        if (optional.isPresent()) {
+            User user = optional.get();
+            return ResponseEntity.ok(user);
         }
         return ResponseEntity.notFound().build();
     }
