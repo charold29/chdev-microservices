@@ -36,21 +36,19 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> saveUser(@Valid @RequestBody User user, BindingResult result) {
+        if (result.hasErrors()) {
+            return validate(result);
+        }
         // When the email already exists.
         if (userService.findByEmail(user.getEmail()).isPresent()) {
             return ResponseEntity.badRequest()
                     .body(Collections.singletonMap("message", "Existe un usuario con ese correo"));
-        }
-
-        if (result.hasErrors()) {
-            return validate(result);
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
     }
 
     @PutMapping("/{userId}")
     public ResponseEntity<?> editUser(@Valid @RequestBody User user, BindingResult result, @PathVariable(name = "userId") Long id) {
-
         if (result.hasErrors()) {
             return validate(result);
         }
@@ -58,7 +56,8 @@ public class UserController {
         if (optional.isPresent()) {
             User userDb = optional.get();
             if (!user.getEmail().equalsIgnoreCase(userDb.getEmail()) &&
-                    userService.findByEmail(user.getEmail()).isPresent()) {
+                    userService.findByEmail(user.getEmail()).isPresent() &&
+                    !user.getEmail().isEmpty()) {
                 return ResponseEntity.badRequest()
                         .body(Collections.singletonMap("message", "Existe un usuario con ese correo"));
             }
