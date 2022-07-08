@@ -50,7 +50,6 @@ public class CourseController {
         return ResponseEntity.notFound().build();
     }
 
-
     @DeleteMapping("/{courseId}")
     public ResponseEntity<?> deleteCourse(@PathVariable(name = "courseId") Long id){
         Optional<Course> optional = courseService.findById(id);
