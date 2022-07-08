@@ -35,7 +35,7 @@ public class CourseController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Course saveCourse(Course course) {
+    public Course saveCourse(@RequestBody Course course) {
         return courseService.save(course);
     }
 
