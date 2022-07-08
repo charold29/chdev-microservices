@@ -4,10 +4,14 @@ import com.charoldev.springcloud.msvc.users.models.entity.User;
 import com.charoldev.springcloud.msvc.users.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -34,13 +38,20 @@ public class UserController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public User saveUser(@RequestBody User user) {
-        return userService.save(user);
+    public ResponseEntity<?> saveUser(@Valid @RequestBody User user, BindingResult result) {
+        if (result.hasErrors()) {
+            return validate(result);
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<User> editUser(@RequestBody User user, @PathVariable(name = "userId") Long id) {
+    public ResponseEntity<?> editUser(@Valid @RequestBody User user, BindingResult result, @PathVariable(name = "userId") Long id) {
+
+        if (result.hasErrors()){
+            return validate(result);
+        }
+
         Optional<User> optional = userService.findById(id);
         if (optional.isPresent()) {
             User userDb = optional.get();
@@ -55,11 +66,18 @@ public class UserController {
     @DeleteMapping("/{userId}")
     public ResponseEntity<?> deleteUser(@PathVariable(name = "userId") Long id) {
         Optional<User> optional = userService.findById(id);
-        if (optional.isPresent()){
+        if (optional.isPresent()) {
             userService.delete(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
+    private ResponseEntity<Map<String, String>> validate(BindingResult result) {
+        Map<String, String> errors = new HashMap<>();
+        result.getFieldErrors().forEach(err -> {
+            errors.put(err.getField(), "El campo " + err.getField() + " " + err.getDefaultMessage());
+        });
+        return ResponseEntity.badRequest().body(errors);
+    }
 }
