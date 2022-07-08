@@ -4,10 +4,14 @@ import com.charoldev.springcloud.msvc.courses.models.entity.Course;
 import com.charoldev.springcloud.msvc.courses.services.CourseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -35,12 +39,20 @@ public class CourseController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Course saveCourse(@RequestBody Course course) {
-        return courseService.save(course);
+    public ResponseEntity<?> saveCourse(@Valid @RequestBody Course course, BindingResult result) {
+
+        if (result.hasErrors()){
+            return validate(result);
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(courseService.save(course));
     }
 
     @PutMapping("/{courseId}")
-    public ResponseEntity<Course> editCourse(@RequestBody Course course, @PathVariable(name = "courseId") Long id) {
+    public ResponseEntity<?> editCourse(@Valid @RequestBody Course course, BindingResult result , @PathVariable(name = "courseId") Long id) {
+
+        if (result.hasErrors()){
+            return validate(result);
+        }
         Optional<Course> optional = courseService.findById(id);
         if (optional.isPresent()) {
             Course courseDb = optional.get();
@@ -58,6 +70,12 @@ public class CourseController {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
         return ResponseEntity.notFound().build();
+    }
+
+    private ResponseEntity<Map<String, String>> validate(BindingResult result){
+        Map<String, String> errors = new HashMap<>();
+        result.getFieldErrors().forEach(err -> errors.put(err.getField(),"El campo "+ err.getField()+" "+err.getDefaultMessage()));
+        return ResponseEntity.badRequest().body(errors);
     }
 
 }

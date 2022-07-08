@@ -51,7 +51,6 @@ public class UserController {
         if (result.hasErrors()){
             return validate(result);
         }
-
         Optional<User> optional = userService.findById(id);
         if (optional.isPresent()) {
             User userDb = optional.get();
@@ -75,9 +74,7 @@ public class UserController {
 
     private ResponseEntity<Map<String, String>> validate(BindingResult result) {
         Map<String, String> errors = new HashMap<>();
-        result.getFieldErrors().forEach(err -> {
-            errors.put(err.getField(), "El campo " + err.getField() + " " + err.getDefaultMessage());
-        });
+        result.getFieldErrors().forEach(err -> errors.put(err.getField(), "El campo " + err.getField() + " " + err.getDefaultMessage()));
         return ResponseEntity.badRequest().body(errors);
     }
 }
