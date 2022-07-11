@@ -1,5 +1,6 @@
 package com.charoldev.springcloud.msvc.courses.services;
 
+import com.charoldev.springcloud.msvc.courses.models.User;
 import com.charoldev.springcloud.msvc.courses.models.entity.Course;
 import com.charoldev.springcloud.msvc.courses.repositories.CourseRepository;
 import org.springframework.stereotype.Service;
@@ -35,4 +36,21 @@ public class CourseServiceImpl implements CourseService{
     public void delete(Long id) {
         courseRepository.deleteById(id);
     }
+
+    @Override
+    public Optional<User> assignUser(User user, Long courseId) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<User> createUser(User user, Long courseId) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<User> unassignUser(User user, Long courseId) {
+        return Optional.empty();
+    }
+
+
 }
