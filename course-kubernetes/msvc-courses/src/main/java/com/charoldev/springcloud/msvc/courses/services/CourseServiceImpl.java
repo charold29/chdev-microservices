@@ -1,5 +1,6 @@
 package com.charoldev.springcloud.msvc.courses.services;
 
+import com.charoldev.springcloud.msvc.courses.interfaces.UserClientRest;
 import com.charoldev.springcloud.msvc.courses.models.User;
 import com.charoldev.springcloud.msvc.courses.models.entity.Course;
 import com.charoldev.springcloud.msvc.courses.repositories.CourseRepository;
@@ -15,6 +16,9 @@ public class CourseServiceImpl implements CourseService{
 
     @Resource
     private CourseRepository courseRepository;
+
+    @Resource
+    private UserClientRest clientRest;
 
     @Override
     @Transactional
