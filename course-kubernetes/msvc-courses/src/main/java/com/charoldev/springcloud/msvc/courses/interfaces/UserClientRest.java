@@ -15,7 +15,7 @@ public interface UserClientRest {
     @PostMapping("/")
     User createUser(@RequestBody User user);
 
-    @GetMapping("/users")
+    @GetMapping("/users-by-course")
     List<User> getStudentsByCourse(@RequestParam Iterable<Long> ids);
 
 }
