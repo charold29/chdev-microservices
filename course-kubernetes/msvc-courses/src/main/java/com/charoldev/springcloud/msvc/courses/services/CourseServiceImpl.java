@@ -43,6 +43,23 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
+    public Optional<Course> findByIdWithUsers(Long id) {
+        Optional<Course> courseOptional = courseRepository.findById(id);
+        if (courseOptional.isPresent()){
+            Course course = courseOptional.get();
+
+            if (!course.getCourseUsers().isEmpty()){
+                List<Long> ids = course.getCourseUsers().stream().map(cu -> cu.getUserId()).toList();
+
+                List<User> users = clientRest.getStudentsByCourse(ids);
+                course.setUsers(users);
+            }
+            return Optional.of(course);
+        }
+        return Optional.empty();
+    }
+
+    @Override
     @Transactional
     public Optional<User> assignUser(User user, Long courseId) {
         Optional<Course> courseOptional = courseRepository.findById(courseId);
