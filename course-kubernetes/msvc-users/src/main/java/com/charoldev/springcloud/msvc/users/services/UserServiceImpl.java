@@ -1,5 +1,6 @@
 package com.charoldev.springcloud.msvc.users.services;
 
+import com.charoldev.springcloud.msvc.users.client.CourseClientRest;
 import com.charoldev.springcloud.msvc.users.models.entity.User;
 import com.charoldev.springcloud.msvc.users.repositories.UserRepository;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,9 @@ public class UserServiceImpl implements UserService{
 
     @Resource
     private UserRepository userRepository;
+
+    @Resource
+    private CourseClientRest clientRest;
 
     @Override
     @Transactional(readOnly = true)
@@ -37,6 +41,7 @@ public class UserServiceImpl implements UserService{
     @Transactional
     public void delete(Long id) {
         userRepository.deleteById(id);
+        clientRest.deleteCourseUserById(id);
     }
 
     @Override
