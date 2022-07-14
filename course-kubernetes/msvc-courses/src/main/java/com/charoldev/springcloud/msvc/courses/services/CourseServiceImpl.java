@@ -28,6 +28,11 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
+    public Optional<Course> findById(Long id) {
+        return courseRepository.findById(id);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public Optional<Course> findByIdWithUsers(Long id) {
         Optional<Course> courseOptional = courseRepository.findById(id);
@@ -46,11 +51,6 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public Optional<Course> findById(Long id) {
-        return courseRepository.findById(id);
-    }
-
-    @Override
     public Course save(Course course) {
         return courseRepository.save(course);
     }
@@ -58,6 +58,11 @@ public class CourseServiceImpl implements CourseService{
     @Override
     public void delete(Long id) {
         courseRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteCourseUserById(Long id) {
+        courseRepository.deleteCourseUserById(id);
     }
 
     @Override
