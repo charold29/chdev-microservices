@@ -1,4 +1,4 @@
-package com.charoldev.springcloud.msvc.courses.interfaces;
+package com.charoldev.springcloud.msvc.courses.client;
 
 import com.charoldev.springcloud.msvc.courses.models.User;
 import org.springframework.cloud.openfeign.FeignClient;

@@ -1,6 +1,6 @@
 package com.charoldev.springcloud.msvc.courses.services;
 
-import com.charoldev.springcloud.msvc.courses.interfaces.UserClientRest;
+import com.charoldev.springcloud.msvc.courses.client.UserClientRest;
 import com.charoldev.springcloud.msvc.courses.models.User;
 import com.charoldev.springcloud.msvc.courses.models.entity.Course;
 import com.charoldev.springcloud.msvc.courses.models.entity.CourseUser;
