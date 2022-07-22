@@ -22,12 +22,13 @@ public class CourseServiceImpl implements CourseService{
     private UserClientRest clientRest;
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Course> findAll() {
         return (List<Course>) courseRepository.findAll();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Course> findById(Long id) {
         return courseRepository.findById(id);
     }
@@ -51,16 +52,19 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
+    @Transactional
     public Course save(Course course) {
         return courseRepository.save(course);
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         courseRepository.deleteById(id);
     }
 
     @Override
+    @Transactional
     public void deleteCourseUserById(Long id) {
         courseRepository.deleteCourseUserById(id);
     }
